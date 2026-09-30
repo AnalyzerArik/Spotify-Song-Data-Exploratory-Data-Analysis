@@ -3,6 +3,7 @@
 ---
 
 ## **Table of Contents**
+
 1. [Introduction](#introduction)  
 2. [Dataset Description](#dataset-description)  
 3. [Project Objectives](#project-objectives)  
@@ -16,97 +17,115 @@
 ---
 
 ## **Introduction**
-This project represents my second deep dive into Spotify song data, aimed at exploring audio features, playlist dynamics, and their impact on song popularity and streaming performance. Leveraging improved data analysis and visualization skills acquired through previous projects, this analysis provides actionable insights into trends over time, key audio features, and the factors that drive playlist success.  
 
-The goal is to understand the elements that make songs engaging and popular while honing my data storytelling capabilities. This project uses a new dataset sourced directly from Spotify's API and a Kaggle-hosted dataset.  
+An exploratory Python project focused on preparing track data, comparing streaming and playlist metrics, and visualizing audio features. It is retained as an earlier portfolio project demonstrating data preparation, metric design, and exploratory reporting.
+
+[Current analyst portfolio](https://github.com/AnalyzerArik/AnalyzerArik)
 
 [Previous Analysis](https://github.com/AnalyzerArik/Spotify-Song-Data-Exploratory-Data-Analysis/blob/main/exploratory-data-analysis-of-spotify-song-data.ipynb) / 
-[Updated (Better) Analysis](https://github.com/AnalyzerArik/Spotify-Song-Data-Exploratory-Data-Analysis/blob/main/spotify-songs-data-analysis-2.ipynb)
+[Revised Analysis](https://github.com/AnalyzerArik/Spotify-Song-Data-Exploratory-Data-Analysis/blob/main/spotify-songs-data-analysis-2.ipynb)
 
 ---
 
 ## **Dataset Description**
-- **Source**: Spotify's API request and Kaggle-hosted Spotify datasets. [Kaggle Dataset](https://www.kaggle.com/datasets/ashishak3000/spotify-dataset)  
-- **Rows**: 953  
-- **Columns**: 25  
-  - Example columns: `Track Name`, `Artist`, `Danceability`, `BPM`, `Valence`, `Streams`, `Playlist Inclusion`.  
-- **Preprocessing**: Handled missing values, normalized numerical fields, and added a "duration" column using the Spotify API.  
+
+- **Source**: [Kaggle Dataset](https://www.kaggle.com/datasets/ashishak3000/spotify-dataset), supplemented with track durations through a Spotify API lookup documented in the notebook.
+- **Loaded data**: 953 rows and 25 columns, including the added duration field.
+- **Analysis sample**: 952 rows after removing one record with a nonnumeric `streams` value.
+- **Example fields**: `track_name`, `artist(s)_name`, `streams`, `in_spotify_playlists`, `bpm`, and `danceability_%`.
+- **Preparation**: Standardized text, converted numeric fields, and filled missing durations using artist-level means followed by a global mean. Duration-based results therefore include imputed values.
 
 ---
 
 ## **Project Objectives**
-- Explore the relationship between audio features and song popularity.  
-- Understand trends in music characteristics over time.  
-- Identify key factors driving playlist inclusion and streaming performance.  
-- Develop clear visualizations to communicate findings effectively.  
+
+- Examine associations between audio features, playlist counts, and streams within the sample.
+- Compare audio-feature averages by release year.
+- Explore track groupings using energy, valence, and danceability.
+- Communicate descriptive results with clear metrics and explicit limitations.
 
 ---
 
 ## **Installation and Setup**
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/AnalyzerArik/Spotify-Song-Data-Exploratory-Data-Analysis.git
-2. Navigate to the project directory:
-   ```bash
-   cd Spotify-Song-Data-Exploratory-Data-Analysis
-3. Install the required libraries:
-   ```bash
-   pip install -r requirements.txt
-4. Run the jupyter notebook:
-   ```bash
-   jupyter notebook
 
+The linked notebooks contain saved outputs for review. To work locally:
+
+```bash
+git clone https://github.com/AnalyzerArik/Spotify-Song-Data-Exploratory-Data-Analysis.git
+cd Spotify-Song-Data-Exploratory-Data-Analysis
+python -m pip install jupyter pandas numpy matplotlib seaborn scikit-learn
+jupyter notebook
+```
+
+The repository does not include a `requirements.txt` or the input CSV. The revised notebook reads `updated_dataset_with_durations.csv` from a Kaggle-specific path; supply that enriched input and update the path before rerunning. The commented API enrichment code is historical reference, not a ready-to-run setup step. Dependencies are not pinned, and a clean-environment rerun has not been verified.
+
+---
 
 ## **Project Workflow**
 
 ### **Data Preprocessing**
-- Cleaned and reformatted the dataset.  
-- Handled missing values and normalized fields.  
-- Added a "duration" column via Spotify API integration.  
+
+- Standardized text and numeric types, removed an invalid streams record, and imputed missing durations.
 
 ### **Exploratory Data Analysis (EDA)**
-- Analyzed correlations between audio features (e.g., `Danceability`, `Tempo`) and streaming performance.  
-- Conducted trend analysis of music characteristics over decades.  
+
+- Compared track and artist-string stream totals, playlist counts, and release-year averages.
+- Examined correlations and distributions of audio features.
 
 ### **Visualization**
-- Used Spotify-themed visualizations to highlight insights.  
-- Clustered songs based on audio features using advanced statistical methods.  
+
+- Built charts with matplotlib and seaborn.
+- Applied K-means with four clusters to energy, valence, and danceability.
 
 ### **Summary**
-- Generated actionable patterns and key insights to understand song popularity and playlist dynamics.  
+
+- Demonstrates preparation, aggregation, visualization, and the need to distinguish exploratory patterns from validated business conclusions.
 
 ---
 
 ## **Key Findings**
-1. **Energy and Danceability**: High-energy, danceable songs dominate popularity metrics.  
-2. **Playlist Inclusion**: Being featured in playlists significantly boosts streams.  
-3. **Trends Over Time**: Modern music trends show increasing energy and danceability.  
-4. **Clustering**: Audio feature clusters reveal diverse music styles and genres.  
-5. **Streams vs. BPM**: Tempo complements other features but isn’t the sole driver of popularity.  
+
+1. **Data quality affects the analysis sample.** The saved cleaning output identifies one invalid streams record; filtering it reduces the loaded data from 953 to 952 rows.
+2. **Duration results depend on imputation.** After artist-level filling, 248 durations remained missing and were filled using a global mean. Duration summaries should not be read as entirely observed measurements.
+3. **The composite ranking is a designed metric.** Its weights are 50% normalized streams, 20% danceability, 20% energy, and 10% valence. High energy and danceability contribute to the ranking by construction; it is not an objective measure of song quality.
+4. **Clustering is exploratory.** Four K-means groups summarize selected audio features; the analysis does not validate them as genres or listener segments.
+
+### **Interpretation limits**
+
+- Playlist and stream comparisons are observational; they do not establish that playlist placement causes additional streams.
+- Rankings and release-year averages describe this sample, not the full Spotify catalog or market-wide changes in listener preferences. Artist totals group the complete artist-credit string, including collaborations.
+- The historical notebook contains broader language about song quality, engagement, and popularity drivers. Those interpretations are not established by the saved analysis; this README states the narrower supported scope.
 
 ---
 
 ## **Tools and Technologies**
+
 - **Programming Language**: Python  
 - **Libraries**:  
   - `pandas` for data manipulation  
-  - `numpy` for statistical calculations  
+  - `numpy` for statistical calculations
+  - `scikit-learn` for K-means clustering  
   - `matplotlib` and `seaborn` for visualizations  
 - **Platforms**: Kaggle Notebook for analysis and presentation.  
 
 ---
 
 ## **Future Work**
-- Integrate machine learning models to predict song popularity.  
-- Analyze listener demographics and regional preferences.  
-- Expand the dataset to include global streaming trends and data from other platforms.  
+
+- Package the enriched input and pinned dependencies for reproducible runs.
+- Quantify associations, show sample sizes by release year, and test sensitivity to imputed durations and ranking weights.
+- Validate cluster stability before assigning business meaning to the groups.
+
+These are proposed improvements, not completed analyses.
 
 ---
 
 ## Final Thoughts
-This project demonstrates how much I’ve grown as a data analyst since my initial exploration of Spotify data. Revisiting this dataset allowed me to apply new skills, offering a deeper and more actionable analysis. I hope this work inspires others to explore the intersection of data and creativity, showing how powerful insights can emerge from careful exploration and visualization.
+
+The project's relevance to analyst and BI work is the preparation of usable reporting data, comparison of clearly defined metrics, and communication of analytical limits. See my [current portfolio](https://github.com/AnalyzerArik/AnalyzerArik) for featured work.
 
 ---
 
 ## **Acknowledgments**
+
 Special thanks to Spotify for providing publicly available data and to the data analysis community for inspiring continuous growth and learning.  
